@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template
 import numpy as np
 import pandas as pd
-
+import os
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
+import dotenv
+from dotenv import load_dotenv
 
+load_dotenv()
 application = Flask(__name__)
 app = application
 
@@ -40,4 +43,5 @@ def predict_datapoint():
         return render_template('home.html', results=results[0])
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    port = int(os.getenv('PORT', 5000))  # Default to port 5000 if not set in .env
+    app.run(host="0.0.0.0", port=port, debug=True)
